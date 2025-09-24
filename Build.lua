@@ -6,7 +6,7 @@ workspace "Basen"
 
    -- Workspace-wide build options for MSVC
    filter "system:windows"
-      buildoptions { "/EHsc", "/Zc:preprocessor", "/Zc:__cplusplus" }
+      buildoptions { "/EHsc", "/Zc:preprocessor", "/Zc:__cplusplus", "/permissive-" }
 
 OutputDir = "build/%{cfg.buildcfg}"
 

@@ -19,12 +19,13 @@
 int main()
 {
 	Basen::Init();
-	Basen::Window w("Hallo Welt", 800, 800);
+
+	Basen::Window w(Basen::WindowSpecification{.title = "Hallo"});
 	Basen::RenderDevice device{};
 
 	device.Start(800, 800, w.getNativeWindow());
 
-	MeshSource source{ "assets/test.fbx" };
+	MeshSource source{ "assets/test1.fbx" };
 
 	if (!source.LoadFromFile()) {
 		std::cout << "Failed to load source model" << std::endl;
@@ -40,7 +41,7 @@ int main()
 
 	//bgfx::UniformHandle u_modelViewProjHandle = bgfx::createUniform("u_mvp", bgfx::UniformType::Mat4);
 
-	bgfx::setState(BGFX_STATE_DEFAULT | BGFX_STATE_DEPTH_TEST_LESS | BGFX_STATE_WRITE_Z | BGFX_STATE_WRITE_B | BGFX_STATE_WRITE_A | BGFX_STATE_WRITE_G | BGFX_STATE_WRITE_R | BGFX_STATE_CULL_CCW );
+	bgfx::setState(BGFX_STATE_MSAA | BGFX_STATE_DEFAULT | BGFX_STATE_DEPTH_TEST_LESS | BGFX_STATE_WRITE_Z | BGFX_STATE_WRITE_B | BGFX_STATE_WRITE_A | BGFX_STATE_WRITE_G | BGFX_STATE_WRITE_R | BGFX_STATE_CULL_CCW );
 
 	float angle = 0.0f;
 
@@ -48,7 +49,10 @@ int main()
 	float proj[16];
 
 	float model[16];
-	float rotation[9];
+	float rotation[16];
+
+	float translation[16];
+	float temp[16];
 
 	const bx::Vec3 at = { 0.0f,0.0f,0.0f };
 	const bx::Vec3 eye = { -0.0f,0.0f,-5.0f };
@@ -64,37 +68,26 @@ int main()
 
 			bx::mtxLookAt(view, eye, at);
 
-			bx::mtxProj(proj, 60.0f, 800 / 800, 0.01f, 50.0f, bgfx::getCaps()->homogeneousDepth);
+			float aspect = float(800) / float(800);
+			bx::mtxProj(proj, 60.0f, aspect, 0.01f, 50.0f, bgfx::getCaps()->homogeneousDepth);
 
 			bgfx::setViewRect(0, 0, 0, uint16_t(800), uint16_t(800));
 
+			bgfx::setViewTransform(0, view, proj);
 
 			bgfx::touch(0);
 
-			bx::mtxIdentity(model);
-			bx::mtxScale(model, 1.0f);
-
-			bx::mtxIdentity(rotation);
 			bx::mtxRotateX(rotation, angle);
-			bx::mtxRotateY(rotation, angle);
-			//bx::mtxRotateY(rotation, angle);
-			
-			bx::mtxMul(model, model,rotation);
 
-			for (int i = 0; i < 10; i++) {
-
-				float translation[16];
-				float temp[16];
+			for (int i = 0; i < 1; i++) {
 
 				bx::mtxTranslate(translation, -i, 0, -i);
 
-				bx::mtxMul(temp, translation, model);
+				bx::mtxMul(temp, translation, rotation);
 
 				bgfx::setTransform(temp);
 				mesh.Render(handle);
 			}
-
-			bgfx::setViewTransform(0, view, proj);
 
 			//bgfx::setUniform(u_modelViewProjHandle, mvp);
 		

@@ -13,17 +13,26 @@
 
 namespace Basen {
 
+	struct WindowSpecification {
+		std::string title;
+		uint32_t width = 1280;
+		uint32_t height = 720;
+		bool isResizeable = true;
+		bool vsync = true;
+	};
+
 	class Window {
 	public:
-		Window(const std::string_view title = "New Window", uint32_t width = 600, uint32_t height = 800);
+		Window(const WindowSpecification& specs = WindowSpecification());
+		~Window();
 
 		void initializeWindow();
 
 		void onResize(int width, int height);
 
-		int getWidth() { return m_Width; }
-		int getHeight() { return m_Height; }
-		std::string_view getTitle() { return m_Title; }
+		int getWidth() { return m_Spec.width; }
+		int getHeight() { return m_Spec.height; }
+		std::string_view getTitle() { return m_Spec.title; }
 
 		GLFWwindow* getGLFWWindow() { return m_Window; }
 
@@ -32,9 +41,8 @@ namespace Basen {
 #endif
 
 	private:
-		GLFWwindow* m_Window;
+		WindowSpecification m_Spec;
 
-		uint32_t m_Width, m_Height;
-		const std::string_view m_Title;
+		GLFWwindow* m_Window;
 	};
 }

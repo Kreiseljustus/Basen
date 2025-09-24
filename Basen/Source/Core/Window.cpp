@@ -1,7 +1,11 @@
 #include "Window.h"
 
-Basen::Window::Window(const std::string_view title, uint32_t width, uint32_t height) : m_Title(title), m_Width(width), m_Height(height) {
+Basen::Window::Window(const WindowSpecification& spec) : m_Spec(spec) {
 	initializeWindow();
+}
+
+Basen::Window::~Window() {
+
 }
 
 void Basen::Window::initializeWindow() {
@@ -11,7 +15,7 @@ void Basen::Window::initializeWindow() {
 
 	glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API); //Disable OpenGL so bgfx can render
 
-	m_Window = glfwCreateWindow(m_Width, m_Height, m_Title.data(), NULL, NULL);
+	m_Window = glfwCreateWindow(m_Spec.width, m_Spec.height, m_Spec.title.data(), NULL, NULL);
 
 	if (!m_Window) {
 		glfwTerminate();
