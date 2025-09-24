@@ -1,17 +1,17 @@
 -- premake5.lua
-workspace "New Project"
+workspace "Basen"
    architecture "x64"
    configurations { "Debug", "Release", "Dist" }
-   startproject "App"
+   startproject "Basen Editor"
 
    -- Workspace-wide build options for MSVC
    filter "system:windows"
       buildoptions { "/EHsc", "/Zc:preprocessor", "/Zc:__cplusplus" }
 
-OutputDir = "%{cfg.system}-%{cfg.architecture}/%{cfg.buildcfg}"
+OutputDir = "build/%{cfg.buildcfg}"
 
-group "Core"
-	include "Core/Build-Core.lua"
+group "Basen"
+	include "Basen/Build-Basen.lua"
 group ""
 
-include "App/Build-App.lua"
+include "Basen Editor/Build-Basen-Editor.lua"
