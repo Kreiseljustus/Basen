@@ -4,6 +4,8 @@
 #include <fstream>
 #include <vector>
 
+#include "Core/Logging.h"
+
 Basen::Shader::Shader(const std::string_view shaderName) : m_ShaderName(shaderName) {
 
 }
@@ -25,7 +27,7 @@ bgfx::ShaderHandle Basen::Shader::loadShader(const ShaderType type) {
 	case bgfx::RendererType::OpenGL: shaderPath += "gl"; break;
 	case bgfx::RendererType::OpenGLES: shaderPath += "gl"; break; //Probably not correct!
 	case bgfx::RendererType::Vulkan: shaderPath += "vk"; break;
-	default: throw std::exception("Failed to load shader because the renderer is not supported");
+	default: BAS_EN_CRITICAL("Renderer type is not supported! (Source Shader.cpp)");
 	}
 
 	shaderPath += ".bin";
@@ -33,8 +35,7 @@ bgfx::ShaderHandle Basen::Shader::loadShader(const ShaderType type) {
 	std::ifstream shaderFile(shaderPath, std::ios::binary | std::ios::ate);
 
 	if (!shaderFile.is_open()) {
-		//Log error
-		std::cout << "Failed to open file: " << shaderPath << std::endl;
+		BAS_EN_ERROR("Failed to open shader file");
 	}
 
 	std::streamsize fileSize = shaderFile.tellg();
@@ -43,8 +44,7 @@ bgfx::ShaderHandle Basen::Shader::loadShader(const ShaderType type) {
 	std::vector<uint8_t> buffer(fileSize + 1);
 	
 	if (!shaderFile.read(reinterpret_cast<char*>(buffer.data()), fileSize)) {
-		//Log error
-		std::cout << "Failed to read file: " << shaderPath << std::endl;
+		BAS_EN_ERROR("Failed to read shader file");
 	}
 	buffer[fileSize] = '\0';
 
@@ -60,8 +60,7 @@ bgfx::ProgramHandle Basen::Shader::loadProgram() {
 	bgfx::ProgramHandle program = bgfx::createProgram(vsh, fsh, true);
 
 	if (!bgfx::isValid(program)) {
-		//Log error
-		std::cout << "Shader program invalid" << std::endl;
+		BAS_EN_ERROR("Shader program invalid");
 	}
 
 	std::cout << "Successfully loaded shader " << m_ShaderName;

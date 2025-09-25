@@ -37,21 +37,21 @@ project "Basen"
        defines { }
 
    filter "configurations:Debug"
-        links { "bgfxDebug", "bimgDebug", "bxDebug", "glfw3", "assimp-vc143-mt", "spdlogd" }
-       defines { "DEBUG", "BX_CONFIG_DEBUG" }
+        links { "bgfxDebug", "bimgDebug", "bxDebug", "glfw3", "assimp-vc143-mt" }
+       defines { "DEBUG", "BX_CONFIG_DEBUG", "_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING" }
        runtime "Debug"
        symbols "On"
 
    filter "configurations:Release"
-       links { "bgfxRelease", "bimgRelease", "bxRelease", "glfw3", "assimp-vc143-mt", "spdlog" }
-       defines { "RELEASE" }
+       links { "bgfxRelease", "bimgRelease", "bxRelease", "glfw3", "assimp-vc143-mt"}
+       defines { "RELEASE", "_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING" }
        runtime "Release"
        optimize "On"
        symbols "On"
 
    filter "configurations:Dist"
-       links { "bgfxRelease", "bimgRelease", "bxRelease", "glfw3", "assimp-vc143-mt", "spdlog" }
-       defines { "DIST" }
+       links { "bgfxRelease", "bimgRelease", "bxRelease", "glfw3", "assimp-vc143-mt" }
+       defines { "DIST", "_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING" }
        runtime "Release"
        optimize "On"
        symbols "Off"

@@ -16,9 +16,14 @@
 
 #include "Rendering/Shader.h"
 
+#include "Core/Logging.h"
+
 int main()
 {
 	Basen::Init();
+	Basen::Logging::Init();
+
+	BAS_EN_WARN("Hallo Wlet");
 
 	Basen::Window w(Basen::WindowSpecification{.title = "Hallo"});
 	Basen::RenderDevice device{};

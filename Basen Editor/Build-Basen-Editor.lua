@@ -53,18 +53,18 @@ project "Basen Editor"
        defines { "WINDOWS" }
 
    filter "configurations:Debug"
-       defines { "DEBUG", "BX_CONFIG_DEBUG" }
+       defines { "DEBUG", "BX_CONFIG_DEBUG", "_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING" }
        runtime "Debug"
        symbols "On"
 
    filter "configurations:Release"
-       defines { "RELEASE" }
+       defines { "RELEASE", "_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING" }
        runtime "Release"
        optimize "On"
        symbols "On"
 
    filter "configurations:Dist"
-       defines { "DIST" }
+       defines { "DIST", "_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING" }
        runtime "Release"
        optimize "On"
        symbols "Off"
