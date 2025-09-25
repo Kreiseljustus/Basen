@@ -14,7 +14,8 @@ project "Basen"
       "../Vendor/bx/include",
       "../Vendor/bimg/include",
       "../Vendor/glfw/include",
-      "../Vendor/Assimp/include"
+      "../Vendor/Assimp/include",
+      "../Vendor/spdlog/include"
    }
 
    libdirs {
@@ -23,7 +24,9 @@ project "Basen"
     "../Vendor/bimg/.build/win64_vs2022/bin",
     "../Vendor/glfw/lib-vc2022",
     "../Vendor/Assimp/bin",
-    "../Vendor/Assimp/lib/x64/"
+    "../Vendor/Assimp/lib/x64/",
+    "../Vendor/spdlog/build/Debug",
+    "../Vendor/spdlog/build/Release"
    }
 
    targetdir ("../Binaries/" .. OutputDir .. "/%{prj.name}")
@@ -34,20 +37,20 @@ project "Basen"
        defines { }
 
    filter "configurations:Debug"
-        links { "bgfxDebug", "bimgDebug", "bxDebug", "glfw3", "assimp-vc143-mt" }
+        links { "bgfxDebug", "bimgDebug", "bxDebug", "glfw3", "assimp-vc143-mt", "spdlogd" }
        defines { "DEBUG", "BX_CONFIG_DEBUG" }
        runtime "Debug"
        symbols "On"
 
    filter "configurations:Release"
-       links { "bgfxRelease", "bimgRelease", "bxRelease", "glfw3", "assimp-vc143-mt" }
+       links { "bgfxRelease", "bimgRelease", "bxRelease", "glfw3", "assimp-vc143-mt", "spdlog" }
        defines { "RELEASE" }
        runtime "Release"
        optimize "On"
        symbols "On"
 
    filter "configurations:Dist"
-       links { "bgfxRelease", "bimgRelease", "bxRelease", "glfw3", "assimp-vc143-mt" }
+       links { "bgfxRelease", "bimgRelease", "bxRelease", "glfw3", "assimp-vc143-mt", "spdlog" }
        defines { "DIST" }
        runtime "Release"
        optimize "On"

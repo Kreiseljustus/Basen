@@ -30,7 +30,8 @@ project "Basen Editor"
       "../Vendor/bx/include",
       "../Vendor/bimg/include",
       "../Vendor/glfw/include",
-      "../Vendor/Assimp/include"
+      "../Vendor/Assimp/include",
+      "../Vendor/spdlog/include"
    }
 
    links
