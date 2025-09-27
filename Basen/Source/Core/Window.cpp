@@ -1,5 +1,7 @@
 #include "Window.h"
 
+#include "Logging.h"
+
 Basen::Window::Window(const WindowSpecification& spec) : m_Spec(spec) {
 	initializeWindow();
 }
@@ -10,7 +12,7 @@ Basen::Window::~Window() {
 
 void Basen::Window::initializeWindow() {
 	if (!glfwInit()) {
-		std::println(std::cout, "Failed to initialize glfw!");
+		BAS_EN_ERROR("Failed to initialize glfw!");
 	}
 
 	glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API); //Disable OpenGL so bgfx can render
@@ -19,7 +21,7 @@ void Basen::Window::initializeWindow() {
 
 	if (!m_Window) {
 		glfwTerminate();
-		std::println(std::cout, "Failed to create glfw window!");
+		BAS_EN_ERROR("Failed to create window!");
 	}
 }
 

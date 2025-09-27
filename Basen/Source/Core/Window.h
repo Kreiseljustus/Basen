@@ -1,7 +1,6 @@
 #pragma once
 
 #include <string>
-#include <iostream> //TODO: REMOVE
 
 #include <glfw3.h>
 #define GLFW_EXPOSE_NATIVE_WIN32

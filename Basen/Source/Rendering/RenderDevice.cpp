@@ -1,6 +1,7 @@
 #include "RenderDevice.h"
 
 #include <iostream>
+#include <Core/Logging.h>
 
 void Basen::RenderDevice::Start(uint32_t width, uint32_t height, HWND windowHandle) {
 
@@ -14,8 +15,10 @@ void Basen::RenderDevice::Start(uint32_t width, uint32_t height, HWND windowHand
 	m_BGFXInit.platformData.nwh = windowHandle;
 
 	if (!bgfx::init(m_BGFXInit)) {
-		throw std::runtime_error("Failed to initialize bgfx!");
+		BAS_EN_CRITICAL("Failed to initialize bgfx!");
 	}
+
+	BAS_EN_INFO("Initialized RenderDevice!");
 
 	bgfx::setDebug(BGFX_DEBUG_TEXT);
 }
