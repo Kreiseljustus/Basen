@@ -41,7 +41,7 @@ bool MeshSource::LoadFromFile() {
         vertex.position[1] = mesh->mVertices[i].y;
         vertex.position[2] = mesh->mVertices[i].z;
 
-        /*if (mesh->HasNormals()) {
+        if (mesh->HasNormals()) {
             vertex.normal[0] = mesh->mNormals[i].x;
             vertex.normal[1] = mesh->mNormals[i].y;
             vertex.normal[2] = mesh->mNormals[i].z;
@@ -51,7 +51,7 @@ bool MeshSource::LoadFromFile() {
         }
 
         //TODO: add support for more uvs
-        if (mesh->HasTextureCoords(0)) {
+        /*if (mesh->HasTextureCoords(0)) {
             vertex.texcoord[0] = mesh->mTextureCoords[0][i].x;
             vertex.texcoord[1] = mesh->mTextureCoords[0][i].y;
         }
@@ -59,13 +59,13 @@ bool MeshSource::LoadFromFile() {
             vertex.texcoord[0] = vertex.texcoord[1] = 0.0f;
         }*/
         
-        m_Vertices.push_back(vertex);
+        m_Vertices.emplace_back(vertex);
     }
 
     for (size_t i = 0; i < mesh->mNumFaces; i++) {
         const aiFace& face = mesh->mFaces[i];
         for (size_t j = 0; j < face.mNumIndices; j++) {
-            m_Indices.push_back(static_cast<uint16_t>(face.mIndices[j]));
+            m_Indices.emplace_back(static_cast<uint16_t>(face.mIndices[j]));
         }
     }
  

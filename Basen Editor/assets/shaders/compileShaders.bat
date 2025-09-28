@@ -14,7 +14,7 @@ REM Path to bgfx includes (relative to project root)
 set BGFX_INC=%SCRIPT_DIR%..\..\..\Vendor\bgfx\src
 
 REM Varying def file
-set VARYING=%SCRIPT_DIR%varying.def.sc
+set VARYING=%SCRIPT_DIR%mesh_varying.def.sc
 
 REM --------------------------
 REM Direct3D11 (s_5_0 profile)
