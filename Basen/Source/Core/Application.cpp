@@ -15,6 +15,8 @@ namespace Basen {
 		m_Window = std::make_shared<Window>(m_Specification.windowSpec);
 
 		m_RenderDevice = std::make_unique<RenderDevice>();
+
+		m_ImGuiLayer = new ImGuiLayer();
 	}
 
 	Application::~Application() {
@@ -40,6 +42,8 @@ namespace Basen {
 			layer->OnInitialLoad();
 		}
 
+		m_ImGuiLayer->OnInitialLoad();
+
 		while (m_Running) {
 			glfwPollEvents();
 
@@ -52,13 +56,26 @@ namespace Basen {
 			float timestep = std::clamp(currentTime - lastTime, 0.001f, 0.1f);
 			lastTime = currentTime;
 
-			for (const std::unique_ptr<Layer>& layer : m_LayerStack) {
-				layer->OnUpdate(timestep);
+			if (!m_Minimized) {
+
+				for (const std::unique_ptr<Layer>& layer : m_LayerStack) {
+					layer->OnUpdate(timestep);
+				}
+
+				for (const std::unique_ptr<Layer>& layer : m_LayerStack) {
+					layer->OnRender();
+				}
+
+				m_ImGuiLayer->Begin();
+
+				for (const std::unique_ptr<Layer>& layer : m_LayerStack) {
+					layer->OnImGuiRender();
+				}
+
+				m_ImGuiLayer->End();
 			}
 
-			for (const std::unique_ptr<Layer>& layer : m_LayerStack) {
-				layer->OnRender();
-			}
+			bgfx::frame();
 		}
 	}
 

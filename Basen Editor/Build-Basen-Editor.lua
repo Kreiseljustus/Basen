@@ -8,12 +8,12 @@ project "Basen Editor"
    files {
     "Source/**.h",
     "Source/**.cpp",
-    "../Vendor/imgui_impl/**.cpp",
-    "../Vendor/imgui_impl/**.h",
+    "../Vendor/bgfx-imgui/bgfx-imgui/src/imgui_impl_bgfx.cpp",
     "../Vendor/dear-imgui/imgui.cpp",
     "../Vendor/dear-imgui/imgui_draw.cpp",
+    "../Vendor/dear-imgui/imgui_tables.cpp",
     "../Vendor/dear-imgui/imgui_widgets.cpp",
-    "../Vendor/dear-imgui/imgui_tables.cpp"
+    "../Vendor/dear-imgui/backends/imgui_impl_glfw.cpp"
 }
 
    includedirs
@@ -24,14 +24,15 @@ project "Basen Editor"
 	  "../Basen/Source",
 
       -- Vendors
-      "../Vendor/imgui_impl",
       "../Vendor/dear-imgui/",
+      "../Vendor/dear-imgui/backends/",
       "../Vendor/bgfx/include",
       "../Vendor/bx/include",
       "../Vendor/bimg/include",
       "../Vendor/glfw/include",
       "../Vendor/Assimp/include",
-      "../Vendor/spdlog/include"
+      "../Vendor/spdlog/include",
+      "../Vendor/bgfx-imgui/"
    }
 
    links

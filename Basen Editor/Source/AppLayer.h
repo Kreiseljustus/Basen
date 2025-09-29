@@ -15,6 +15,7 @@ public:
 
 	virtual void OnInitialLoad() override;
 
+	virtual void OnImGuiRender() override;
 	virtual void OnUpdate(float ts) override;
 	virtual void OnRender() override;
 private:

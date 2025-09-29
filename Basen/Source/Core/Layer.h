@@ -14,5 +14,6 @@ namespace Basen {
 
 		virtual void OnUpdate(float dt) {}
 		virtual void OnRender() {}
+		virtual void OnImGuiRender() {}
 	};
 }

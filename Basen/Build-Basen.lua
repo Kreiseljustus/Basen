@@ -15,7 +15,9 @@ project "Basen"
       "../Vendor/bimg/include",
       "../Vendor/glfw/include",
       "../Vendor/Assimp/include",
-      "../Vendor/spdlog/include"
+      "../Vendor/spdlog/include",
+      "../Vendor/dear-imgui/",
+      "../Vendor/bgfx-imgui/"
    }
 
    libdirs {

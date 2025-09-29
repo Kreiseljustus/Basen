@@ -3,6 +3,7 @@
 #include "Window.h"
 #include "Layer.h"
 #include "Rendering/RenderDevice.h"
+#include "ImGui/ImGuiLayer.h"
 
 #include <memory>
 #include <vector>
@@ -29,6 +30,10 @@ namespace Basen{
 
 		static Application& get();
 
+		std::shared_ptr<Window> getWindow() const {
+			return m_Window;
+		}
+
 		float getTime();
 	private:
 		ApplicationSpecification m_Specification;
@@ -37,7 +42,10 @@ namespace Basen{
 		std::unique_ptr<RenderDevice> m_RenderDevice;
 
 		bool m_Running = false;
+		bool m_Minimized = false;
 
 		std::vector<std::unique_ptr<Layer>> m_LayerStack;
+
+		ImGuiLayer* m_ImGuiLayer;
 	};
 }

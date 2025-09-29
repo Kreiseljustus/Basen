@@ -29,6 +29,26 @@ void AppLayer::OnInitialLoad() {
 }
 
 
+void AppLayer::OnImGuiRender() {
+	ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
+
+	bool dummy = false;
+
+	ImGui::Begin("Editor", &dummy, window_flags);
+
+	if (ImGui::BeginMenuBar()) {
+		if (ImGui::BeginMenu("File")) {
+			if (ImGui::MenuItem("Import model", "Ctrl+I")) {
+				BAS_APP_INFO("Clicked import model");
+			}
+			ImGui::EndMenu();
+		}
+		ImGui::EndMenuBar();
+	}
+
+	ImGui::End();
+}
+
 void AppLayer::OnUpdate(float ts) {
 
 }
@@ -70,6 +90,4 @@ void AppLayer::OnRender() {
 		bgfx::setTransform(temp);
 		m_TestMesh->Render(m_ShaderProgram);
 	}
-
-	bgfx::frame();
 }
