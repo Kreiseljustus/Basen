@@ -9,6 +9,7 @@ Binaries/
 *.sln
 *.log
 *.bin
+*.ini
 Makefile
 
 # Exclude
