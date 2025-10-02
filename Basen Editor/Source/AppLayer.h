@@ -22,7 +22,7 @@ public:
 	virtual void OnUpdate(float ts) override;
 	virtual void OnRender() override;
 
-	virtual void OnResize(uint32_t width, uint32_t height) override;
+	void OnViewportResize(uint32_t width, uint32_t height);
 private:
 	MeshSource m_TestMeshSource{ "assets/test1.fbx" };
 	MeshSource m_Test2MeshSource{ "assets/test2.fbx" };
@@ -47,4 +47,10 @@ private:
 	bool m_RenderSecondMesh = false;
 
 	bx::Vec3 m_Eye{ -0.0f,0.0f,-5.0f };
+
+	uint32_t m_ViewportWidth{ 1280 };
+	uint32_t m_ViewportHeight{ 720 };
+
+	uint32_t m_LastViewportWidth;
+	uint32_t m_LastViewportHeight;
 };

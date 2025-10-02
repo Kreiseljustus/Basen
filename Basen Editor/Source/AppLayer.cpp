@@ -105,19 +105,35 @@ void AppLayer::OnImGuiRender() {
 
 	ImGui::End();
 
-	ImGui::Begin("Viewport");
-	ImVec2 viewportSize = ImGui::GetContentRegionAvail();
+
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0);
+
+	ImGui::Begin("Viewport", nullptr, ImGuiWindowFlags_NoScrollbar | 
+	ImGuiWindowFlags_NoTitleBar |
+	ImGuiWindowFlags_NoCollapse);
+	ImVec2 viewportSize = ImGui::GetWindowSize();
+	m_ViewportWidth = static_cast<uint32_t>(viewportSize.x);
+	m_ViewportHeight = static_cast<uint32_t>(viewportSize.y);
 	ImTextureID viewTexId = (ImTextureID)(uintptr_t)m_SampleTex.idx;
 	ImGui::Image(viewTexId, viewportSize, ImVec2(0, 0), ImVec2(1, 1));
 
 	ImGui::End();
+	ImGui::PopStyleVar(2);
 }
 
 void AppLayer::OnUpdate(float ts) {
-
+	if (m_ViewportWidth != m_LastViewportWidth || m_ViewportHeight != m_LastViewportHeight) {
+		OnViewportResize(m_ViewportWidth, m_ViewportHeight);
+		m_LastViewportWidth = m_ViewportWidth;
+		m_LastViewportHeight = m_ViewportHeight;
+	}
 }
 
 void AppLayer::OnRender() {
+
+	if (m_ViewportWidth == 0 || m_ViewportHeight == 0)
+        return;
 
 	bgfx::setState(BGFX_STATE_MSAA | BGFX_STATE_DEFAULT | BGFX_STATE_DEPTH_TEST_LESS | BGFX_STATE_WRITE_Z | BGFX_STATE_WRITE_B | BGFX_STATE_WRITE_A | BGFX_STATE_WRITE_G | BGFX_STATE_WRITE_R | BGFX_STATE_CULL_CCW);
 
@@ -139,11 +155,11 @@ void AppLayer::OnRender() {
 
 	bgfx::setViewFrameBuffer(1, m_FrameBufferTex);
 
-	bgfx::setViewRect(1, 0, 0, 1280, 720);
+	bgfx::setViewRect(1, 0, 0, m_ViewportWidth, m_ViewportHeight);
 
-	bgfx::setViewClear(1, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, 0x100000, 1.0f, 0);
+	bgfx::setViewClear(1, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, 0xFF0000, 1.0f, 0);
 
-	float aspect = float(1280) / float(720);
+	float aspect = float(m_ViewportWidth) / float(m_ViewportHeight);
 	bx::mtxProj(proj, 60.0f, aspect, 0.01f, 50.0f, bgfx::getCaps()->homogeneousDepth);
 
 	bgfx::setViewTransform(1, view, proj);
@@ -177,10 +193,12 @@ void AppLayer::OnRender() {
 	bgfx::dbgTextClear();
 	bgfx::dbgTextPrintf(0, 0, 0x4F, "BGFX RENDERING OK");
 
-	bgfx::blit(0, m_SampleTex, 0, 0, m_ColorTex, 0, 0, 1280, 720);
+	bgfx::blit(0, m_SampleTex, 0, 0, m_ColorTex, 0, 0, m_ViewportWidth, m_ViewportHeight);
 }
 
-void AppLayer::OnResize(uint32_t width, uint32_t height) {
+void AppLayer::OnViewportResize(uint32_t width, uint32_t height) {
+
+	BAS_APP_INFO("Resize viewport width {0} and {1}", width, height);
 
 	if (width == 0 && height == 0) return;
 
