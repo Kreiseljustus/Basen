@@ -1,6 +1,7 @@
 #include "Window.h"
 
 #include "Logging.h"
+#include "Application.h"
 
 Basen::Window::Window(const WindowSpecification& spec) : m_Spec(spec) {
 	initializeWindow();
@@ -23,8 +24,19 @@ void Basen::Window::initializeWindow() {
 		glfwTerminate();
 		BAS_EN_ERROR("Failed to create window!");
 	}
+
+	glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height) {
+
+		Application::get().getWindow()->onResize(width, height);
+
+		});
 }
 
-void Basen::Window::onResize(int width, int height) {
+void Basen::Window::onResize(uint32_t width, uint32_t height) {
+	m_Spec.width = width;
+	m_Spec.height = height;
 
+	Application::get().getRenderDevice()->Resize(width, height);
+	
+	Application::get().onResize(width, height);
 }

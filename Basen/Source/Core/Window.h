@@ -27,7 +27,7 @@ namespace Basen {
 
 		void initializeWindow();
 
-		void onResize(int width, int height);
+		void onResize(uint32_t width, uint32_t height);
 
 		int getWidth() { return m_Spec.width; }
 		int getHeight() { return m_Spec.height; }

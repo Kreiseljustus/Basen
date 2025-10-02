@@ -92,4 +92,13 @@ namespace Basen {
 	float Application::getTime() {
 		return (float)glfwGetTime();
 	}
+
+	void Application::onResize(uint32_t width, uint32_t height) {
+
+		if (width && height == 0) m_Minimized = true;
+
+		for (const std::unique_ptr<Layer>& layer : m_LayerStack) {
+			layer->OnResize(width, height);
+		}
+	}
 }

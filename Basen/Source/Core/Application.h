@@ -34,7 +34,11 @@ namespace Basen{
 			return m_Window;
 		}
 
+		RenderDevice* getRenderDevice() { return m_RenderDevice.get(); }
+
 		float getTime();
+
+		void onResize(uint32_t width, uint32_t height); //Temporary, use event system at some point
 	private:
 		ApplicationSpecification m_Specification;
 		std::shared_ptr<Window> m_Window;

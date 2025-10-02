@@ -8,7 +8,7 @@ public:
     StaticMesh(const MeshSource& source);
     ~StaticMesh();
 
-    void Render(bgfx::ProgramHandle program);
+    void Render(bgfx::ProgramHandle program, bgfx::ViewId viewId);
 
 private:
     bgfx::VertexBufferHandle m_VertexBuffer = BGFX_INVALID_HANDLE;

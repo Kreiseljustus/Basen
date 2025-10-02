@@ -63,7 +63,7 @@ bgfx::ProgramHandle Basen::Shader::loadProgram() {
 		BAS_EN_ERROR("Shader program invalid");
 	}
 
-	std::cout << "Successfully loaded shader " << m_ShaderName;
+	BAS_EN_INFO("Loaded shaderprogram {}", m_ShaderName);
 
 	return program;
 }

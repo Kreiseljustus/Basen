@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstdint>
+
 namespace Basen {
 	class Layer {
 	public:
@@ -15,5 +17,7 @@ namespace Basen {
 		virtual void OnUpdate(float dt) {}
 		virtual void OnRender() {}
 		virtual void OnImGuiRender() {}
+
+		virtual void OnResize(uint32_t width, uint32_t height) {} //TODO: swap with event system
 	};
 }

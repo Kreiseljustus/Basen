@@ -3,11 +3,15 @@
 #include <bgfx/platform.h>
 
 #include <iostream>
+#include <Core/Logging.h>
 
 static bgfx::VertexLayout s_Layout;
 
 StaticMesh::StaticMesh(const MeshSource& source) {
     if (s_Layout.getStride() == 0) {
+
+        BAS_EN_INFO("Vertexlayout not defined, creating with pos3float, texcoord02float");
+
         s_Layout
             .begin()
             .add(bgfx::Attrib::Position, 3, bgfx::AttribType::Float)
@@ -21,17 +25,11 @@ StaticMesh::StaticMesh(const MeshSource& source) {
         s_Layout
     );
 
-    std::cout << "Vertices: " << source.GetVertices().size() << std::endl;
-
     m_IndexBuffer = bgfx::createIndexBuffer(
         bgfx::makeRef(source.GetIndices().data(), static_cast<uint32_t>(sizeof(uint16_t)) * static_cast<uint32_t>(source.GetIndices().size()))
     );
 
-    std::cout << "Indicies: " << source.GetIndices().size() << std::endl;;
-
     m_IndexCount = static_cast<uint32_t>(source.GetIndices().size());
-
-    std::cout << "Index Count: " << m_IndexCount << std::endl;
 }
 
 StaticMesh::~StaticMesh() {
@@ -39,12 +37,12 @@ StaticMesh::~StaticMesh() {
     if (bgfx::isValid(m_IndexBuffer)) bgfx::destroy(m_IndexBuffer);
 }
 
-void StaticMesh::Render(bgfx::ProgramHandle program) {
+void StaticMesh::Render(bgfx::ProgramHandle program, bgfx::ViewId viewId) {
 
-    if (!bgfx::isValid(m_VertexBuffer)) { std::cout << "vertex buffer invalid" << std::endl; }
-    if (!bgfx::isValid(m_IndexBuffer)) { std::cout << "index buffer invalid" << std::endl; }
+    if (!bgfx::isValid(m_VertexBuffer)) { BAS_EN_ERROR("Vertex buffer invalid!"); }
+    if (!bgfx::isValid(m_IndexBuffer)) { BAS_EN_ERROR("Index buffer invalid!"); }
 
     bgfx::setVertexBuffer(0, m_VertexBuffer);
     bgfx::setIndexBuffer(m_IndexBuffer);
-    bgfx::submit(0, program);
+    bgfx::submit(viewId, program);
 }

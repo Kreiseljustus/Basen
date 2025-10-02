@@ -23,6 +23,9 @@ namespace Basen {
 
 		s_Instance = this;
 
+		ImGuiIO& io = ImGui::GetIO();
+		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+
 		GLFWwindow* window = Application::get().getWindow()->getGLFWWindow();
 
 		glfwSetScrollCallback(Application::get().getWindow()->getGLFWWindow(), [](GLFWwindow* window, double xoffset, double yoffset) {
@@ -31,7 +34,7 @@ namespace Basen {
 		});
 
 		ImGui_ImplGlfw_InitForOther(window, true);
-		ImGui_ImplBgfx_Init(1, [](ImGuiViewport* vp) -> void* { return nullptr; });
+		ImGui_ImplBgfx_Init(0, [](ImGuiViewport* vp) -> void* { return nullptr; });
 
 		BAS_EN_INFO("Initialized ImGui");
 	}
@@ -51,7 +54,7 @@ namespace Basen {
 
 		//I want the editor to render the current scene into a texture and display it using imgui
 		//but currently this is a work around as its not implemented yet
-		ImGui_ImplBgfx_Render(1, ImGui::GetDrawData(), 0);
+		ImGui_ImplBgfx_Render(0, ImGui::GetDrawData(), 0);
 	}
 
 	void ImGuiLayer::scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
