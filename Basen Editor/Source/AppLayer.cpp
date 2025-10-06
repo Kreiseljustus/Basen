@@ -202,8 +202,6 @@ void AppLayer::OnViewportResize(uint32_t width, uint32_t height) {
 
 	if (width == 0 && height == 0) return;
 
-	BAS_APP_INFO("Resize with {0} and {1}", width, height);
-
     if (bgfx::isValid(m_ColorTex)) {
         bgfx::destroy(m_ColorTex);
         m_ColorTex = BGFX_INVALID_HANDLE;
