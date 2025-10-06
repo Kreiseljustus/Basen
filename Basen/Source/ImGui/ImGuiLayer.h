@@ -2,7 +2,7 @@
 
 #include "Core/Layer.h"
 
-#include <glfw3.h>
+#include <GLFW/glfw3.h>
 
 namespace Basen {
 	class ImGuiLayer : public Layer {

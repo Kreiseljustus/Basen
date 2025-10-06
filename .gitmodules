@@ -7,12 +7,12 @@
 [submodule "Vendor/bx"]
 	path = Vendor/bx
 	url = https://github.com/bkaradzic/bx.git
-[submodule "Vendor/dear-imgui"]
-	path = Vendor/dear-imgui
-	url = https://github.com/ocornut/imgui.git
 [submodule "Vendor/spdlog"]
 	path = Vendor/spdlog
 	url = https://github.com/gabime/spdlog.git
 [submodule "Vendor/bgfx-imgui-example"]
 	path = Vendor/bgfx-imgui-example
 	url = https://github.com/calcdqy/bgfx-imgui-example.git
+[submodule "Vendor/dear-imgui"]
+	path = Vendor/dear-imgui
+	url = https://github.com/ocornut/imgui.git
