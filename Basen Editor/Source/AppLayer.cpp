@@ -44,6 +44,9 @@ void AppLayer::OnInitialLoad() {
 	m_TestTexture = bgfx::createTexture2D(2, 2, false, 1, bgfx::TextureFormat::RGBA8, 0, bgfx::copy(testTexData, sizeof(testTexData)));
 
 	m_SampleTex = bgfx::createTexture2D(1280, 720, false, 1, bgfx::TextureFormat::RGBA8, BGFX_TEXTURE_BLIT_DST);
+
+	u_lightDir = bgfx::createUniform("u_lightDir", bgfx::UniformType::Vec4);
+	u_lightColor = bgfx::createUniform("u_lightColor", bgfx::UniformType::Vec4);
 }
 
 
@@ -102,6 +105,13 @@ void AppLayer::OnImGuiRender() {
 
 	ImGui::DragFloat("Angle", &angle);
 	ImGui::DragFloat3("Eye", &m_Eye.x);
+
+	ImGui::Spacing();
+	ImGui::Spacing();
+	ImGui::Spacing();
+
+	ImGui::ColorEdit4("Light color", m_lightColor);
+	ImGui::InputFloat4("Light direction", m_lightDir);
 
 	ImGui::End();
 
@@ -168,6 +178,9 @@ void AppLayer::OnRender() {
 
 	//bx::mtxRotateX(rotation, angle);
 
+	bgfx::setUniform(u_lightColor, m_lightColor);
+	bgfx::setUniform(u_lightDir, m_lightDir);
+
 	for (int i = 0; i < 1; i++) {
 
 		bx::mtxTranslate(translation, (float) -i, 0, (float) -i);
@@ -198,7 +211,7 @@ void AppLayer::OnRender() {
 
 void AppLayer::OnViewportResize(uint32_t width, uint32_t height) {
 
-	BAS_APP_INFO("Resize viewport width {0} and {1}", width, height);
+	BAS_APP_TRACE("Resize viewport width {0} and {1}", width, height);
 
 	if (width == 0 && height == 0) return;
 
