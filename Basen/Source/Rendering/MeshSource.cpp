@@ -51,13 +51,13 @@ bool MeshSource::LoadFromFile() {
         }
 
         //TODO: add support for more uvs
-        /*if (mesh->HasTextureCoords(0)) {
+        if (mesh->HasTextureCoords(0)) {
             vertex.texcoord[0] = mesh->mTextureCoords[0][i].x;
             vertex.texcoord[1] = mesh->mTextureCoords[0][i].y;
         }
         else {
             vertex.texcoord[0] = vertex.texcoord[1] = 0.0f;
-        }*/
+        }
         
         m_Vertices.emplace_back(vertex);
     }
