@@ -1,3 +1,6 @@
+
+#pragma warning(disable : 4244)
+
 #define IMGUI_DEFINE_MATH_OPERATORS
 #include "imgui_impl_bgfx.h"
 
