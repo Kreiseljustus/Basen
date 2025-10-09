@@ -32,7 +32,8 @@ project "Basen Editor"
       "../Vendor/glfw/include",
       "../Vendor/Assimp/include",
       "../Vendor/spdlog/include",
-      "../Vendor/bgfx-imgui/"
+      "../Vendor/bgfx-imgui/",
+      "../Vendor/entt/single_include"
    }
 
    links
