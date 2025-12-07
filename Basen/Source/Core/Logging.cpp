@@ -11,6 +11,9 @@ namespace Basen {
 	std::shared_ptr<spdlog::logger> Logging::s_ApplicationLogger;
 
 	void Logging::Init() {
+
+		spdlog::set_pattern("%^[%T] %n : %v (%s:%#)%$");
+
 		std::vector<spdlog::sink_ptr> logSinks;
 
 #ifdef _WIN32
