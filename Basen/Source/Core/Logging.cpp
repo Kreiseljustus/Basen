@@ -1,6 +1,7 @@
 #include "Logging.h"
 
 #include <spdlog/sinks/ansicolor_sink.h>
+#include <spdlog/sinks/basic_file_sink.h>
 
 #ifdef _WIN32
 #include <spdlog/sinks/wincolor_sink.h>
@@ -22,7 +23,7 @@ namespace Basen {
 		logSinks.emplace_back(std::make_shared<spdlog::sinks::ansicolor_stdout_sink_mt>());
 #endif
 
-		logSinks.emplace_back(std::make_shared<spdlog::sinks::simple_file_sink_mt>("Basen.log", true));
+		logSinks.emplace_back(std::make_shared<spdlog::sinks::basic_file_sink_mt>("Basen.log", true));
 
 		s_EngineLogger =  std::make_shared<spdlog::logger>("ENGINE", begin(logSinks), end(logSinks));
 		spdlog::register_logger(s_EngineLogger);
