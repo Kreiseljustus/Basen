@@ -13,10 +13,10 @@ using namespace Basen;
 
 //This layer is currently mainly used to debug and test stuff
 
-class AppLayer : public Basen::Layer {
+class EditorLayer : public Basen::Layer {
 public:
-	AppLayer();
-	virtual ~AppLayer();
+	EditorLayer();
+	virtual ~EditorLayer();
 
 	virtual void OnInitialLoad() override;
 

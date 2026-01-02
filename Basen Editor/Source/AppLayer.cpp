@@ -8,15 +8,15 @@
 
 //This layer is currently mainly used to debug and test stuff
 
-AppLayer::AppLayer() {
+EditorLayer::EditorLayer() {
 	
 }
 
-AppLayer::~AppLayer()
+EditorLayer::~EditorLayer()
 {
 }
 
-void AppLayer::OnInitialLoad() {
+void EditorLayer::OnInitialLoad() {
 	if (!m_TestMeshSource.LoadFromFile() && !m_Test2MeshSource.LoadFromFile()) {
 		BAS_APP_WARN("Failed to load test mesh source!");
 	}
@@ -50,7 +50,7 @@ void AppLayer::OnInitialLoad() {
 }
 
 
-void AppLayer::OnImGuiRender() {
+void EditorLayer::OnImGuiRender() {
 	ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar;
 
 	bool dummy = false;
@@ -132,7 +132,7 @@ void AppLayer::OnImGuiRender() {
 	ImGui::PopStyleVar(2);
 }
 
-void AppLayer::OnUpdate(float ts) {
+void EditorLayer::OnUpdate(float ts) {
 	if (m_ViewportWidth != m_LastViewportWidth || m_ViewportHeight != m_LastViewportHeight) {
 		OnViewportResize(m_ViewportWidth, m_ViewportHeight);
 		m_LastViewportWidth = m_ViewportWidth;
@@ -140,7 +140,7 @@ void AppLayer::OnUpdate(float ts) {
 	}
 }
 
-void AppLayer::OnRender() {
+void EditorLayer::OnRender() {
 
 	if (m_ViewportWidth == 0 || m_ViewportHeight == 0)
         return;
@@ -209,7 +209,7 @@ void AppLayer::OnRender() {
 	bgfx::blit(0, m_SampleTex, 0, 0, m_ColorTex, 0, 0, m_ViewportWidth, m_ViewportHeight);
 }
 
-void AppLayer::OnViewportResize(uint32_t width, uint32_t height) {
+void EditorLayer::OnViewportResize(uint32_t width, uint32_t height) {
 
 	BAS_APP_TRACE("Resize viewport width {0} and {1}", width, height);
 

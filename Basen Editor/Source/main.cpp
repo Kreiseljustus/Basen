@@ -11,6 +11,6 @@ int main() {
 	};
 
 	Basen::Application app(appSpecs);
-	app.PushLayer<AppLayer>();
+	app.PushLayer<EditorLayer>();
 	app.run();
 }
