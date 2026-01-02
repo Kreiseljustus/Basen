@@ -2,13 +2,16 @@
 
 #include <string>
 
-#include <GLFW/glfw3.h>
+#ifdef WINDOWS
 #define GLFW_EXPOSE_NATIVE_WIN32
+#elifdef LINUX
+#define GLFW_EXPOSE_NATIVE_X11
+#endif
+
+#include <GLFW/glfw3.h>
 #include <GLFW/glfw3native.h>
 
-#ifdef _WIN32
-#include <Windows.h>
-#endif
+#include "Core/NativeWindowHandle.h"
 
 namespace Basen {
 
@@ -16,7 +19,7 @@ namespace Basen {
 		std::string title;
 		uint32_t width = 1280;
 		uint32_t height = 720;
-		bool isResizeable = true;
+		bool isResizable = true;
 		bool vsync = true;
 	};
 
@@ -29,16 +32,13 @@ namespace Basen {
 
 		void onResize(uint32_t width, uint32_t height);
 
-		int getWidth() { return m_Spec.width; }
-		int getHeight() { return m_Spec.height; }
+		int getWidth() const { return m_Spec.width; }
+		int getHeight() const { return m_Spec.height; }
 		std::string_view getTitle() { return m_Spec.title; }
 
 		GLFWwindow* getGLFWWindow() { return m_Window; }
 
-#ifdef _WIN32
-		HWND getNativeWindow() { return glfwGetWin32Window(m_Window); } //TODO: support all platforms in a single method (templates?)
-#endif
-
+		NativeWindowHandle getNativeWindowHandle() const;
 	private:
 		WindowSpecification m_Spec;
 

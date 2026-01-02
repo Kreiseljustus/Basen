@@ -1,4 +1,4 @@
-project "Basen Editor"
+project "Basen-Editor"
    kind "ConsoleApp"
    language "C++"
    cppdialect "C++23"
@@ -70,3 +70,19 @@ project "Basen Editor"
        runtime "Release"
        optimize "On"
        symbols "Off"
+
+    filter "system:linux"
+    defines { "LINUX" }
+    libdirs {
+        "../Vendor/bgfx/.build/linux64_gcc/bin",
+        "../Vendor/glfw/lib"
+    }
+
+    filter "configurations:Debug"
+        links { "bxDebug", "bimgDebug", "bgfxDebug", "glfw", "GL", "X11", "pthread", "dl" }
+
+    filter "configurations:Release"
+        links { "bxRelease", "bimgRelease", "bgfxRelease", "glfw", "GL", "X11", "pthread", "dl" }
+
+    filter "configurations:Dist"
+        links { "bxRelease", "bimgRelease", "bgfxRelease", "glfw", "GL", "X11", "pthread", "dl" }

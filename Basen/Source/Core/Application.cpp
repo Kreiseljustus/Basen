@@ -34,7 +34,7 @@ namespace Basen {
 
 		Basen::Logging::Init();
 
-		m_RenderDevice->Start(m_Specification.windowSpec.width, m_Specification.windowSpec.height, m_Window->getNativeWindow());
+		m_RenderDevice->Start(m_Specification.windowSpec.width, m_Specification.windowSpec.height, m_Window->getNativeWindowHandle());
 
 		BAS_EN_INFO("Running OnInitialLoad for all attached layers");
 

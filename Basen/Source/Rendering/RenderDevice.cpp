@@ -3,7 +3,7 @@
 #include <iostream>
 #include <Core/Logging.h>
 
-void Basen::RenderDevice::Start(uint32_t width, uint32_t height, HWND windowHandle) {
+void Basen::RenderDevice::Start(uint32_t width, uint32_t height, NativeWindowHandle windowHandle) {
 
 	m_WindowHandle = windowHandle;
 
@@ -12,7 +12,10 @@ void Basen::RenderDevice::Start(uint32_t width, uint32_t height, HWND windowHand
 	m_BGFXInit.resolution.height = height;
 	m_BGFXInit.resolution.reset = BGFX_RESET_VSYNC;
 
-	m_BGFXInit.platformData.nwh = windowHandle;
+	m_BGFXInit.platformData.nwh = windowHandle.GetPlatformHandle();
+#ifdef LINUX
+	m_BGFXInit.platformData.ndt = windowHandle.display;
+#endif
 
 	if (!bgfx::init(m_BGFXInit)) {
 		BAS_EN_CRITICAL("Failed to initialize bgfx!");

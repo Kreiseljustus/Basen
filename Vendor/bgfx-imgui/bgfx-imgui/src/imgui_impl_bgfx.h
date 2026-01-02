@@ -41,4 +41,4 @@ void ImGui_ImplBgfx_Render(const bgfx::ViewId viewId, ImDrawData *draw_data, uin
 void ImGui_ImplBgfx_InvalidateDeviceObjects();
 void ImGui_ImplBgfx_CreateDeviceObjects();
 
-void *native_window_handle(ImGuiViewport *viewport);
+static inline void *native_window_handle(ImGuiViewport *viewport);

@@ -1,18 +1,17 @@
 #include "MeshSource.h"
-#include <fstream>
-#include <sstream>
 
+#include <fstream>
 #include <assimp/Importer.hpp>
 #include <assimp/postprocess.h>
 #include <assimp/scene.h>
 
-MeshSource::MeshSource(const std::string& filepath)
+Basen::MeshSource::MeshSource(const std::string& filepath)
     : m_FilePath(filepath)
 {
     LoadFromFile();
 }
 
-bool MeshSource::LoadFromFile() {
+bool Basen::MeshSource::LoadFromFile() {
     std::ifstream file(m_FilePath);
     if (!file.is_open()) return false;
 

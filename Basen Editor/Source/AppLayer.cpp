@@ -204,7 +204,7 @@ void AppLayer::OnRender() {
 	}
 
 	bgfx::dbgTextClear();
-	bgfx::dbgTextPrintf(0, 0, 0x4F, "BGFX RENDERING OK");
+	//bgfx::dbgTextPrintf(0, 0, 0x4F, "BGFX RENDERING OK");
 
 	bgfx::blit(0, m_SampleTex, 0, 0, m_ColorTex, 0, 0, m_ViewportWidth, m_ViewportHeight);
 }

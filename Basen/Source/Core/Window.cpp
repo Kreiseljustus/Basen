@@ -40,3 +40,14 @@ void Basen::Window::onResize(uint32_t width, uint32_t height) {
 	
 	Application::get().onResize(width, height);
 }
+
+Basen::NativeWindowHandle Basen::Window::getNativeWindowHandle() const {
+	NativeWindowHandle handle{};
+#ifdef WINDOWS
+	handle.hwnd = glfwGetWin32Window(m_Window);
+#elif defined(LINUX)
+	handle.x11Window = glfwGetX11Window(m_Window);
+	handle.display = glfwGetX11Display();
+#endif
+	return handle;
+}

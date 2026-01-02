@@ -37,7 +37,11 @@ project "Basen"
 
    filter "system:windows"
        systemversion "latest"
-       defines { }
+       defines { "WINDOWS" }
+
+    filter "system:linux" 
+    defines { "LINUX" } 
+    links { "dl", "pthread", "X11" }
 
    filter "configurations:Debug"
         links { "bgfxDebug", "bimgDebug", "bxDebug", "glfw3", "assimp-vc143-mt" }
