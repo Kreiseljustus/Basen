@@ -7,7 +7,7 @@
 namespace Basen {
 	class ImGuiLayer : public Layer {
 	public:
-		ImGuiLayer() = default;
+		ImGuiLayer() : m_MouseWheel(0) {};
 		~ImGuiLayer();
 
 		virtual void OnInitialLoad() override;

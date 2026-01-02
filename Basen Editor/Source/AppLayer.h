@@ -9,6 +9,8 @@
 #include <bgfx/bgfx.h>
 #include <bx/math.h>
 
+using namespace Basen;
+
 //This layer is currently mainly used to debug and test stuff
 
 class AppLayer : public Basen::Layer {

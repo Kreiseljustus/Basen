@@ -7,7 +7,7 @@
 
 static bgfx::VertexLayout s_Layout;
 
-StaticMesh::StaticMesh(const MeshSource& source) {
+Basen::StaticMesh::StaticMesh(const MeshSource& source) {
     if (s_Layout.getStride() == 0) {
 
         BAS_EN_INFO("Vertexlayout not defined, creating with pos3float, texcoord02float");
@@ -32,12 +32,12 @@ StaticMesh::StaticMesh(const MeshSource& source) {
     m_IndexCount = static_cast<uint32_t>(source.GetIndices().size());
 }
 
-StaticMesh::~StaticMesh() {
+Basen::StaticMesh::~StaticMesh() {
     if (bgfx::isValid(m_VertexBuffer)) bgfx::destroy(m_VertexBuffer);
     if (bgfx::isValid(m_IndexBuffer)) bgfx::destroy(m_IndexBuffer);
 }
 
-void StaticMesh::Render(bgfx::ProgramHandle program, bgfx::ViewId viewId) {
+void Basen::StaticMesh::Render(bgfx::ProgramHandle program, bgfx::ViewId viewId) {
 
     if (!bgfx::isValid(m_VertexBuffer)) { BAS_EN_ERROR("Vertex buffer invalid!"); }
     if (!bgfx::isValid(m_IndexBuffer)) { BAS_EN_ERROR("Index buffer invalid!"); }

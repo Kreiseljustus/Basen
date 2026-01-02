@@ -87,6 +87,9 @@ namespace Basen {
 		if (s_Application) {
 			return *s_Application;
 		}
+		else {
+			throw std::runtime_error("Application instance does not exist!");
+		}
 	}
 
 	float Application::getTime() {
