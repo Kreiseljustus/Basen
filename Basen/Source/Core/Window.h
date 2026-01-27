@@ -1,10 +1,11 @@
 #pragma once
 
 #include <string>
+#include <string_view>
 
 #ifdef WINDOWS
 #define GLFW_EXPOSE_NATIVE_WIN32
-#elifdef LINUX
+#elif defined(LINUX)
 #define GLFW_EXPOSE_NATIVE_X11
 #endif
 
