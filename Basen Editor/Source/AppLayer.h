@@ -50,8 +50,8 @@ private:
 
 	bx::Vec3 m_Eye{ -0.0f,0.0f,-5.0f };
 
-	float m_lightDir[4]{ 0.3, 1.0, 0.2, 1.0 };
-	float m_lightColor[4]{ 1.0, 1.0, 1.0, 1.0 };
+	float m_lightDir[4]{ 0.3f, 1.0f, 0.2f, 1.0f };
+	float m_lightColor[4]{ 1.0f, 1.0f, 1.0f, 1.0f };
 
 	uint32_t m_ViewportWidth{ 1280 };
 	uint32_t m_ViewportHeight{ 720 };
