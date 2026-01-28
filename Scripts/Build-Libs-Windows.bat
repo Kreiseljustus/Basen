@@ -18,8 +18,8 @@ echo Using MSBuild: %MSBUILD%
 
 call ..\bx\tools\bin\windows\genie.exe vs2022
 
-"%MSBUILD%" .build\projects\vs2022\bgfx.sln /p:Configuration=Release /p:Platform=x64
-"%MSBUILD%" .build\projects\vs2022\bgfx.sln /p:Configuration=Debug   /p:Platform=x64
+"%MSBUILD%" .build\projects\vs2022\bgfx.sln /p:Configuration=Release /p:Platform=x64 /p:RuntimeLibrary=MultiThreadedDLL
+"%MSBUILD%" .build\projects\vs2022\bgfx.sln /p:Configuration=Debug   /p:Platform=x64 /p:RuntimeLibrary=MultiThreadedDLL
 
 echo bgfx build finished
 
