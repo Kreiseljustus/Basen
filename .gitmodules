@@ -19,3 +19,6 @@
 [submodule "Vendor/entt"]
 	path = Vendor/entt
 	url = https://github.com/skypjack/entt.git
+[submodule "Vendor/Assimp"]
+	path = Vendor/Assimp
+	url = https://github.com/assimp/assimp
