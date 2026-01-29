@@ -3,7 +3,7 @@ project "Basen-Editor"
    language "C++"
    cppdialect "C++23"
    targetdir "Binaries/%{cfg.buildcfg}"
-   staticruntime "off"
+   staticruntime "on"
 
    files {
     "Source/**.h",
@@ -31,6 +31,7 @@ project "Basen-Editor"
       "../Vendor/bimg/include",
       "../Vendor/glfw/include",
       "../Vendor/Assimp/include",
+      "../Vendor/Assimp/build/include",
       "../Vendor/spdlog/include",
       "../Vendor/bgfx-imgui/",
       "../Vendor/entt/single_include"
@@ -42,7 +43,7 @@ project "Basen-Editor"
    }
 
     postbuildcommands {
-    'copy /Y "..\\Vendor\\Assimp\\bin\\x64\\assimp-vc143-mt.dll" "%{cfg.targetdir}%"',
+    'copy /Y "..\\Vendor\\Assimp\\build\\bin\\assimp-vc143-mt.dll" "%{cfg.targetdir}%"',
     'call assets\\shaders\\compileShaders.bat'
     }
 

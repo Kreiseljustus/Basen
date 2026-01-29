@@ -20,19 +20,20 @@ cd /d %~dp0..\Vendor\bgfx
 
 echo Using MSBuild: %MSBUILD%
 
-REM Generate solution
-call ..\bx\tools\bin\windows\genie.exe vs2022 --with-dynamic-runtime
+REM CLEAN old build artifacts (IMPORTANT)
+if exist .build rmdir /s /q .build
+if exist .cache rmdir /s /q .cache
 
-REM Build with /MD and /MDd
+REM Generate solution with static CRT (/MT, /MTd)
+call ..\bx\tools\bin\windows\genie.exe vs2022
+REM Build Release
 "%MSBUILD%" .build\projects\vs2022\bgfx.sln ^
  /p:Configuration=Release ^
- /p:Platform=x64 ^
- /p:RuntimeLibrary=MultiThreadedDLL
+ /p:Platform=x64
 
+REM Build Debug
 "%MSBUILD%" .build\projects\vs2022\bgfx.sln ^
  /p:Configuration=Debug ^
- /p:Platform=x64 ^
- /p:RuntimeLibrary=MultiThreadedDebugDLL
+ /p:Platform=x64
 
 echo bgfx build finished
-pause

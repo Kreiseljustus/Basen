@@ -3,7 +3,7 @@ project "Basen"
    language "C++"
    cppdialect "C++23"
    targetdir "Binaries/%{cfg.buildcfg}"
-   staticruntime "off"
+   staticruntime "on"
 
    files { "Source/**.h", "Source/**.cpp" }
 
@@ -15,6 +15,7 @@ project "Basen"
       "../Vendor/bimg/include",
       "../Vendor/glfw/include",
       "../Vendor/Assimp/include",
+      "../Vendor/Assimp/build/include",
       "../Vendor/spdlog/include",
       "../Vendor/dear-imgui/",
       "../Vendor/bgfx-imgui/",
@@ -26,8 +27,8 @@ project "Basen"
     "../Vendor/bx/.build/win64_vs2022/bin",
     "../Vendor/bimg/.build/win64_vs2022/bin",
     "../Vendor/glfw/lib-vc2022",
-    "../Vendor/Assimp/bin",
-    "../Vendor/Assimp/lib/x64/",
+    "../Vendor/Assimp/build/bin/Release",
+    "../Vendor/Assimp/build/lib/Release",
     "../Vendor/spdlog/build/Debug",
     "../Vendor/spdlog/build/Release"
    }
@@ -44,20 +45,20 @@ project "Basen"
     links { "dl", "pthread", "X11" }
 
    filter "configurations:Debug"
-        links { "bgfxDebug", "bimgDebug", "bxDebug", "glfw3", "assimp-vc143-mt" }
+        links { "bgfxDebug", "bimgDebug", "bxDebug", "glfw3_mt", "assimp-vc143-mt" }
        defines { "DEBUG", "BX_CONFIG_DEBUG", "_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING" }
        runtime "Debug"
        symbols "On"
 
    filter "configurations:Release"
-       links { "bgfxRelease", "bimgRelease", "bxRelease", "glfw3", "assimp-vc143-mt"}
+       links { "bgfxRelease", "bimgRelease", "bxRelease", "glfw3_mt", "assimp-vc143-mt"}
        defines { "RELEASE", "_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING" }
        runtime "Release"
        optimize "On"
        symbols "On"
 
    filter "configurations:Dist"
-       links { "bgfxRelease", "bimgRelease", "bxRelease", "glfw3", "assimp-vc143-mt" }
+       links { "bgfxRelease", "bimgRelease", "bxRelease", "glfw3_mt", "assimp-vc143-mt" }
        defines { "DIST", "_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING" }
        runtime "Release"
        optimize "On"
