@@ -43,7 +43,7 @@ project "Basen-Editor"
    }
 
     postbuildcommands {
-    'copy /Y "..\\Vendor\\Assimp\\build\\bin\\assimp-vc143-mt.dll" "%{cfg.targetdir}%"',
+    'copy /Y "..\\Vendor\\Assimp\\build\\bin\\Release\\assimp-vc143-mt.dll" "%{cfg.targetdir}%"',
     'call assets\\shaders\\compileShaders.bat'
     }
 
