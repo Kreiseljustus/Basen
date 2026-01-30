@@ -12,8 +12,7 @@ EditorLayer::EditorLayer() {
 	
 }
 
-EditorLayer::~EditorLayer()
-{
+EditorLayer::~EditorLayer() {
 }
 
 void EditorLayer::OnInitialLoad() {
@@ -47,14 +46,91 @@ void EditorLayer::OnInitialLoad() {
 
 	u_lightDir = bgfx::createUniform("u_lightDir", bgfx::UniformType::Vec4);
 	u_lightColor = bgfx::createUniform("u_lightColor", bgfx::UniformType::Vec4);
+
+	m_ActiveScene = new Scene();
+
+	for (int i = 0; i < 1000; i++) {
+		m_Entities.push_back(m_ActiveScene->CreateEntity(std::string("Test") + std::to_string(i)));
+	}
+	m_ActiveScene->AddComponent<TransformComponent>(m_Entities.at(0));
+
+	m_SelectedEntity = &m_Entities.at(0);
 }
 
+void EditorLayer::drawSceneView() {
+	ImGui::Begin("Hierarchy");
+
+	for (size_t i = 0; i < m_Entities.size(); ++i) {
+		Entity& ent = m_Entities[i];
+		std::string& name = m_ActiveScene->GetComponent<NameComponent>(ent).Name;
+
+		bool selected = (m_SelectedEntity != nullptr && *m_SelectedEntity == ent);
+		if (ImGui::Selectable(name.c_str(), selected)) {
+			m_SelectedEntity = &ent;
+		}
+	}
+
+	ImGui::End();
+}
+
+void EditorLayer::drawViewport() {
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0);
+
+	ImGui::Begin("Viewport", nullptr, ImGuiWindowFlags_NoScrollbar |
+		ImGuiWindowFlags_NoTitleBar |
+		ImGuiWindowFlags_NoCollapse);
+	ImVec2 viewportSize = ImGui::GetWindowSize();
+	m_ViewportWidth = static_cast<uint32_t>(viewportSize.x);
+	m_ViewportHeight = static_cast<uint32_t>(viewportSize.y);
+	ImTextureID viewTexId = (ImTextureID)(uintptr_t)m_SampleTex.idx;
+	ImGui::Image(viewTexId, viewportSize, ImVec2(0, 0), ImVec2(1, 1));
+
+	ImGui::End();
+	ImGui::PopStyleVar(2);
+}
+
+void EditorLayer::drawInspector() {
+	ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar;
+	bool dummy = false;
+	
+	ImGui::Begin("Inspector", &dummy, window_flags);
+
+	if (ImGui::BeginMenuBar()) {
+		if (ImGui::BeginMenu("File")) {
+			if (ImGui::MenuItem("Import model", "Ctrl+I")) {
+				BAS_APP_INFO("Clicked import model");
+			}
+			if (ImGui::MenuItem("Swap test model")) {
+				m_RenderSecondMesh = !m_RenderSecondMesh;
+			}
+			ImGui::EndMenu();
+		}
+		ImGui::EndMenuBar();
+	}
+
+	ImGui::DragFloat("Angle", &angle);
+	ImGui::DragFloat3("Eye", &m_Eye.x);
+
+	ImGui::Spacing();
+	ImGui::Spacing();
+	ImGui::Spacing();
+
+	ImGui::ColorEdit4("Light color", m_lightColor);
+	ImGui::InputFloat4("Light direction", m_lightDir);
+
+	ImGui::End();
+}
+
+void EditorLayer::drawConsole() {
+	ImGui::Begin("Console", nullptr);
+
+	ImGui::Text("Logs will appear here in the future");
+
+	ImGui::End();
+}
 
 void EditorLayer::OnImGuiRender() {
-	ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar;
-
-	bool dummy = false;
-
 	ImGuiWindowFlags dwindow_flags =
 		ImGuiWindowFlags_NoDocking |
 		ImGuiWindowFlags_NoTitleBar |
@@ -88,48 +164,10 @@ void EditorLayer::OnImGuiRender() {
 
 	ImGui::End();
 
-	ImGui::Begin("Editor", &dummy, window_flags);
-
-	if (ImGui::BeginMenuBar()) {
-		if (ImGui::BeginMenu("File")) {
-			if (ImGui::MenuItem("Import model", "Ctrl+I")) {
-				BAS_APP_INFO("Clicked import model");
-			}
-			if (ImGui::MenuItem("Swap test model")) {
-				m_RenderSecondMesh = !m_RenderSecondMesh;
-			}
-			ImGui::EndMenu();
-		}
-		ImGui::EndMenuBar();
-	}
-
-	ImGui::DragFloat("Angle", &angle);
-	ImGui::DragFloat3("Eye", &m_Eye.x);
-
-	ImGui::Spacing();
-	ImGui::Spacing();
-	ImGui::Spacing();
-
-	ImGui::ColorEdit4("Light color", m_lightColor);
-	ImGui::InputFloat4("Light direction", m_lightDir);
-
-	ImGui::End();
-
-
-	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
-	ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0);
-
-	ImGui::Begin("Viewport", nullptr, ImGuiWindowFlags_NoScrollbar | 
-	ImGuiWindowFlags_NoTitleBar |
-	ImGuiWindowFlags_NoCollapse);
-	ImVec2 viewportSize = ImGui::GetWindowSize();
-	m_ViewportWidth = static_cast<uint32_t>(viewportSize.x);
-	m_ViewportHeight = static_cast<uint32_t>(viewportSize.y);
-	ImTextureID viewTexId = (ImTextureID)(uintptr_t)m_SampleTex.idx;
-	ImGui::Image(viewTexId, viewportSize, ImVec2(0, 0), ImVec2(1, 1));
-
-	ImGui::End();
-	ImGui::PopStyleVar(2);
+	drawInspector();
+	drawViewport();
+	drawSceneView();
+	drawConsole();
 }
 
 void EditorLayer::OnUpdate(float ts) {

@@ -6,6 +6,10 @@
 #include "Rendering/StaticMesh.h"
 #include "Rendering/Shader.h"
 
+#include "Scene/Scene.h"
+#include "Scene/Entity.h"
+#include "Scene/Components.h"
+
 #include <bgfx/bgfx.h>
 #include <bx/math.h>
 
@@ -26,6 +30,15 @@ public:
 
 	void OnViewportResize(uint32_t width, uint32_t height);
 private:
+	void drawSceneView();
+	void drawViewport();
+	void drawInspector();
+	void drawConsole();
+private:
+	Scene* m_ActiveScene{ nullptr };
+	Entity* m_SelectedEntity{ nullptr };
+	std::vector<Entity> m_Entities;
+
 	MeshSource m_TestMeshSource{ "assets/test1.fbx" };
 	MeshSource m_Test2MeshSource{ "assets/test2.fbx" };
 
